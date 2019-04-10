@@ -1,42 +1,31 @@
-require("dotenv").config();
-var express = require("express");
-var exphbs = require("express-handlebars");
-var db = require("./models");
-
-var app = express();
-var PORT = process.env.PORT || 3000;
+const db =require("./models")
+const express = require("express");
+const routes=require("./routes")
+const app = express();
+const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.static("public"));
-
-// Handlebars
-app.engine(
-  "handlebars",
-  exphbs({
-    defaultLayout: "main"
-  })
-);
-app.set("view engine", "handlebars");
+// Serve up static assets (usually on heroku)
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+}
 
 // Routes
-var apiRoutes = require("./routes/apiRoutes");
-var htmlRoutes = require("./routes/htmlRoutes");
+app.use(routes);
 
-app.use(apiRoutes);
-app.use(htmlRoutes);
+app.get("*", (req, res)=> {
+  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+});
 
-var syncOptions = { force: false };
 
 // If running a test, set syncOptions.force to true
 // clearing the `testdb`
+var syncOptions = { force: false };
 if (process.env.NODE_ENV === "test") {
   syncOptions.force = true;
 }
-
-app.use(express.static(process.cwd() + "/public/styles"));
-
 // Starting the server, syncing our models ------------------------------------/
 db.sequelize.sync(syncOptions).then(function() {
   app.listen(PORT, function() {
@@ -45,7 +34,10 @@ db.sequelize.sync(syncOptions).then(function() {
       PORT,
       PORT
     );
-  });
+  });app.get("*", function(req, res) {
+  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+});
+
 });
 
 module.exports = app;
