@@ -1,14 +1,18 @@
 const db=require("../models");
 module.exports={
+  //show all categorie
     GetCategories:(req,res)=>{
         db.categories
         .findAll({})
         .then(dbCategories=> res.json(dbCategories))
     },
+    //add a category
     MakeCategory:(req,res)=>{
       const newCategory=req.body.category
       db.categories.create(newCategory)
     },
+
+    //get all posts under a category
     GetPost:(req,res)=>{
         db.Comments
         .findAll({
@@ -20,6 +24,7 @@ module.exports={
           res.send(500)
     });
     },
+    //make a post or a comment
     MakePost:(req,res)=>{
       const newPost={
         post:req.body.text,
@@ -42,6 +47,8 @@ module.exports={
             res.send(500)
       });
     },
+
+    //grab all comments under a post
     GetComment:(req,res)=>{
         db.Comments.findAll({
             where: {
@@ -71,7 +78,18 @@ module.exports={
             res.render("comments", filteredArray[0]);
             // res.json(filteredArray);
           });
-        }
+    },
+    //grab most recent created posts
+    FindRecentPosts:(req,res)=>{
+      dbComment
+      .findAll({
+          limit:10,
+          order:["createAt","DESC"]
+      }).then((postsData)=>{
+
+        res.send(postsData)
+      })
+    }
     }
 
 
