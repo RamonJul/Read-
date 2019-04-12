@@ -3,7 +3,7 @@ const user=require("./controller/author");
 
 
 module.exports=((passport)=>{
-    passport.use(new localStrategy(
+    passport.use(new localStrategy((username,password,done)=>
        user.Login(username,password,done)
 
     ))
