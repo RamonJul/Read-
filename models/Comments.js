@@ -17,17 +17,14 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: false
     },
-    location: {
+    location: {// states in which specific genre this comment will be in and will say it is a comment
       type: DataTypes.STRING,
-      allowNull: true
-    }, // states in which specific genre this comment will be in
-    ifComment: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false
-    }, // diffrentiates if this is a comment or a post
-    postId: {
+      allowNull: false,
+      defaultValue: "comment"
+    }, 
+    postId: {// identifies what posts a comment falls under in
       type: DataTypes.INTEGER,
-      allowNull: false
+      defaultValue:0
     },
     parentId: DataTypes.INTEGER
     //parent id of where this comment will be

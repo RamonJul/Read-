@@ -1,51 +1,72 @@
-const db=require("../models");
+const db=require("../models")
+const OP=db.Sequelize.Op
+const comment_db=db.Comments;
+
 module.exports={
+  //show all categorie
     GetCategories:(req,res)=>{
+      console.log("Get Categories")
         db.categories
         .findAll({})
         .then(dbCategories=> res.json(dbCategories))
     },
+    //add a category
     MakeCategory:(req,res)=>{
-      const newCategory=req.body.category
+      console.log("Post Categories")
+      const newCategory={
+        categories:req.body.category
+      }
+      console.log(newCategory)
       db.categories.create(newCategory)
+      .then(()=>{
+        return res.status(200)
+      }).catch(err=>{
+        console.log(err)
+        return res.status(400)
+      })
     },
+
+    //get all posts under a category
     GetPost:(req,res)=>{
-        db.Comments
+      console.log("Get Posts")
+       comment_db
         .findAll({
             where: {
                 location: req.params.category,
-                ifComment: false
               }
         }).then(dbPosts=>res.json(dbPosts)).then(()=> {
-          res.send(500)
     });
     },
+    //make a post or a comment
     MakePost:(req,res)=>{
+      console.log("Posts Posts or Comments")
       const newPost={
         post:req.body.text,
+        title:req.body.title,
         author:req.body.author,
-        location:req.body.location
+        location:req.params.category
       }
-      if (req.body.ifComment) {
-        newPost.ifComment = req.body.ifComment;
-      }
-    
-      if (req.body.postId) {
-        newPost.postId = req.body.postId;
-      }
-    
-      if (req.body.parentId) {
+      if (req.params.id&&req.body.parentId) {//comment specific parameters
+        newPost.postId = req.params.id
+        newPost.location="comment"
         newPost.parentId = req.body.parentId;
       }
     
-      db.Comments.create(newPost).then(()=> {
-            res.send(500)
-      });
+     comment_db.create(newPost)
+     .then(()=>{
+      return res.status(200)
+    }).catch(err=>{
+      console.log(err)
+      return res.status(400)
+    })
     },
+
+    //grab all comments under a post
     GetComment:(req,res)=>{
-        db.Comments.findAll({
+      console.log("Get Comments")
+       comment_db.findAll({
             where: {
-              postId: dbComment.dataValues.id
+              postId: req.params.id
             }
           }).then(function(results) {
             var filteredArray = results.map(function(result) {
@@ -67,11 +88,26 @@ module.exports={
               }
             }
             // console.log(commentObj);
-            // res.json(filteredArray[0]);
-            res.render("comments", filteredArray[0]);
+            res.json(filteredArray);
+            // res.render("comments", filteredArray[0]);
             // res.json(filteredArray);
           });
-        }
+    },
+    //grab most recent created posts
+    FindRecentPosts:(req,res)=>{
+      console.log("Get Recent Posts")
+     comment_db
+      .findAll({
+          where:{
+            location:{[OP.ne]:"comment"}
+          },
+          limit:10,
+          order:[["createdAt","DESC"]]
+      }).then((postsData)=>{
+
+        res.send(postsData)
+      })
+    }
     }
 
 
