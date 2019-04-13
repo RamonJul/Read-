@@ -2,43 +2,52 @@ const User=require("../models").Authors
 
 module.exports={
     Login:(username,password,done)=>{
-        User.findOne({where:{userName:username}})
+        User.findOne({where:{userNAME:username}})
         .then((user)=>{
-                if(err){
-                    return done(err)
-                }
                 if(!user){
                     return done(null,false,{message:"Invalid Username"})
                 }
                 if(!user.password===password){
+
                     return done(null,false, {message:"Incorrect password"})
                 }
+                // console.log("-----------------------")
+                // console.log(user)
+                // console.log("-----------------------")
+              let sessionID=user.dataValues.id
+              console.log(sessionID)
+               return done(null,sessionID)
 
+        }).catch(err=>{
+
+          return done(err)
         })
     },
     SignUp:(req,res)=>{
-        var newUser = {
+       const newUser = {
             name: req.body.name,
             email: req.body.email,
             password: req.body.password,
             userNAME: req.body.userName,
             profilepic: req.body.profilepic
           };
-          db.Authors.findOne({
+        User.findOne({
             where: {
               email: req.body.email
             }
-          }).then(function(res) {
-            if (res.length > 0) {
+          }).then((data)=> {
+            if (data) {
               res.send({
                 code: 204,
                 success: "There is already an account with that email address."
               });
-            } else {
-              db.Authors.create(newUser).then(function(dbAuthor) {
-                res.json(dbAuthor);
-              });
-            }
+           
+            
+              } else {
+                User.create(newUser).then((dbAuthor)=> {
+                  res.json(dbAuthor);
+                });
+            } 
           });
     }
 }
