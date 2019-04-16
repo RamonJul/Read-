@@ -1,20 +1,22 @@
 {
   "name": "devreddit",
-  "version": "0.1.0",
+  "version": "0.1.1",
+  "description": "",
   "private": true,
+  "proxy": "http://localhost:3001",
+  "author": "",
+  "license": "ISC",
   "dependencies": {
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-scripts": "2.1.8"
+    "react-router-dom": "^5.0.0",
+    "react-scripts": "^2.1.8"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   },
   "browserslist": [
     ">0.2%",

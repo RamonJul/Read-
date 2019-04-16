@@ -1,0 +1,11 @@
+nav.navbar.navbar-default {
+  margin-bottom: 0;
+}
+
+#logo{
+  height: 5vh;
+}
+
+#w-100{
+  min-width: 100%!important;
+}

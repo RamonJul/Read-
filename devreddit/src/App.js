@@ -1,26 +1,36 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Home from './pages/Home';
+import Category from './pages/Category';
+import Post from './pages/Post';
+import Login from './pages/Login';
+import FourOhFour from './pages/404';
+import User from './pages/User';
+import Footer from './components/Footer';
+import Navbar from "./components/Navbar";
+import Wrapper from "./components/Wrapper";
 import './App.css';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Router>
+        <div>
+          <Navbar />
+          <Wrapper>
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/category" component={Category} />
+              <Route exact path="/category/:category" component={Category} />
+              <Route exact path="/post/:postId" component={Post} />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/user/:userId" component={User}/>
+              <Route component={FourOhFour}/>
+            </Switch>
+          </Wrapper>
+          <Footer />
+        </div>
+      </Router>
     );
   }
 }
