@@ -7,14 +7,13 @@ const app = express();
 const cookieParser=require("cookie-parser")
 const PORT = process.env.PORT || 3000;
 const path=require("path")
-require("./passport")(passport)
+const sessionConfig=require("./config/session")
+require("./config/passport")(passport)
 const userroutes=require("./routes/user")(passport)
 // Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(session({
-    secret:"hello"
-}));
+app.use(session(sessionConfig));
 app.use(express.json());
 app.use(passport.initialize());
 app.use(passport.session());

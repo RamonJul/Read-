@@ -1,53 +1,32 @@
 const User=require("../models").Authors
 
 module.exports={
-    Login:(username,password,done)=>{
-        User.findOne({where:{userNAME:username}})
+    Login:(accessToken,refreshToken,profile,cb)=>{
+        User.findOne({where:{githubId:profile.id}})
         .then((user)=>{
                 if(!user){
-                    return done(null,false,{message:"Invalid Username"})
+                    const {name,email,id,login,avatar_url}=profile._json
+                    const newUser={
+                      name: name,
+                      email: email,
+                      githubId:id,
+                      userNAME: login,
+                      profilepic:avatar_url
+                    };
+                   User.create(newUser).then((CreatedUser)=> {
+                    return cb(null,CreatedUser)
+                    }).catch(err=>{
+                      return cb(err)
+                    })
                 }
-                if(!user.password===password){
-
-                    return done(null,false, {message:"Incorrect password"})
+                else{
+                  return cb(null,user)
                 }
-                // console.log("-----------------------")
-                // console.log(user)
-                // console.log("-----------------------")
-              let sessionID=user.dataValues.id
-              console.log(sessionID)
-               return done(null,sessionID)
-
+                  
+              
         }).catch(err=>{
 
-          return done(err)
+          return cb(err)
         })
-    },
-    SignUp:(req,res)=>{
-       const newUser = {
-            name: req.body.name,
-            email: req.body.email,
-            password: req.body.password,
-            userNAME: req.body.userName,
-            profilepic: req.body.profilepic
-          };
-        User.findOne({
-            where: {
-              email: req.body.email
-            }
-          }).then((data)=> {
-            if (data) {
-              res.send({
-                code: 204,
-                success: "There is already an account with that email address."
-              });
-           
-            
-              } else {
-                User.create(newUser).then((dbAuthor)=> {
-                  res.json(dbAuthor);
-                });
-            } 
-          });
     }
-}
+  }

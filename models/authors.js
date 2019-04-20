@@ -5,22 +5,22 @@ module.exports = function(sequelize, DataTypes) {
       autoIncrement: true,
       primaryKey: true
     },
+    githubId:{
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: false
     },
     email: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: true
     },
     profilepic: DataTypes.STRING,
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
     userNAME: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: true
     }
   });
   return Authors;
