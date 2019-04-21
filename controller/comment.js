@@ -1,7 +1,6 @@
 const db=require("../models")
 const OP=db.Sequelize.Op
 const comment_db=db.Comments;
-
 module.exports={
   //show all categorie
     GetCategories:(req,res)=>{
@@ -95,7 +94,7 @@ module.exports={
     },
     //grab most recent created posts
     FindRecentPosts:(req,res)=>{
-      console.log("Get Recent Posts")
+      console.log(req.user)
      comment_db
       .findAll({
           where:{
@@ -107,8 +106,35 @@ module.exports={
 
         res.send(postsData)
       })
-    }
+    },
+   
+    //checks if comment is owned by the user
+    CheckOwnerShip:(req,res)=>{
+      comment_db
+        .findAll({
+            where:{
+              id:req.params.id
+            }
+        }).then((commentData)=>{
+            res.send(commentData.author===req.user.id)
+        })
+
+    },
+    //delete comment
+    DeleteComment:(req,res)=>{
+        comment_db
+          .destroy({
+              where:{
+                id:req.params.id
+              }
+          }).then((data)=>{
+            res.status(200)
+
+          })
+
+
     }
 
+}
 
 
