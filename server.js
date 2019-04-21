@@ -1,18 +1,24 @@
+
 const db =require("./models")
 const express = require("express");
 const commentRoutes=require("./routes/comment")
 const passport=require("passport")
+const session=require("express-session")
 const app = express();
+const cookieParser=require("cookie-parser")
 const PORT = process.env.PORT || 3000;
-
-require("./passport")(passport)
+const path=require("path")
+const sessionConfig=require("./config/session")
+require("./config/passport")(passport)
 const userroutes=require("./routes/user")(passport)
 // Middleware
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(session(sessionConfig));
 app.use(express.json());
 app.use(passport.initialize());
 app.use(passport.session());
-// Serve up static assets (usually on heroku)
+//) Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
