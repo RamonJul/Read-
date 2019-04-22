@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const commentController=require("../controller/comment");
-router.route("/")
+router.route("/api/recent")
     .get(commentController.FindRecentPosts)
 router.route("/api/category/:category")//go to a specific category and show all posts and  make a posts
     .get(commentController.GetPost)
@@ -11,7 +11,7 @@ router.route("/api/category/:category/id/:id")//go to post and look at all the c
     .get(commentController.GetComment)
     .post(commentController.MakePost)
 
-router.route("/categorylist")// show all of the categories
+router.route("/api/categorylist")// show all of the categories
     .get(commentController.GetCategories)
     .post(commentController.MakeCategory)
 

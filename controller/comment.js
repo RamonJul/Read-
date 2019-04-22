@@ -19,10 +19,10 @@ module.exports={
       console.log(newCategory)
       db.categories.create(newCategory)
       .then(()=>{
-        return res.status(200)
+        return res.sendStatus(200)
       }).catch(err=>{
         console.log(err)
-        return res.status(400)
+        return res.sendStatus(400)
       })
     },
 
@@ -54,10 +54,10 @@ module.exports={
     
      comment_db.create(newPost)
      .then(()=>{
-      return res.status(200)
+      return res.sendStatus(200)
     }).catch(err=>{
       console.log(err)
-      return res.status(400)
+      return res.sendStatus(400)
     })
     },
 
