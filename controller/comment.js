@@ -62,23 +62,24 @@ module.exports={
 
     //grab all comments under a post
     GetComment:(req,res)=>{
+      let filteredArray=[]
       console.log("Get Comments")
        comment_db.findAll({
             where: {
               postId: req.params.id
             }
-          }).then(function(results) {
-            var filteredArray = results.map(function(result) {
+          }).then((results)=> {
+             filteredArray = results.map((result)=> {
               return result.dataValues;
             });
-            filteredArray.sort(function(a, b) {
+            filteredArray.sort((a, b)=> {
               return (a.parentId || 0) - (b.parentId || 0);
             });
-            filteredArray.forEach(function(comment) {
+            filteredArray.forEach((comment)=> {
               comment.children = [];
             });
-            for (var i = filteredArray.length - 1; i >= 0; i--) {
-              for (var j = i - 1; j >= 0; j--) {
+            for (let i = filteredArray.length - 1; i >= 0; i--) {
+              for (let j = i - 1; j >= 0; j--) {
                 if (filteredArray[j].id === filteredArray[i].parentId) {
                   filteredArray[j].children.push(filteredArray[i]);
                   filteredArray.splice(i, 1);
@@ -86,10 +87,17 @@ module.exports={
                 }
               }
             }
-            // console.log(commentObj);
-            res.json(filteredArray);
-            // res.render("comments", filteredArray[0]);
-            // res.json(filteredArray);
+              comment_db.findOne({
+                where:{
+                  id:req.params.id
+                }
+              }).then((result)=>{
+                const post={
+                  post:result[i],
+                  comments:filteredArray
+                }
+                res.json(post);
+              })
           });
     },
     //grab most recent created posts
