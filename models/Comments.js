@@ -14,7 +14,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     author: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false
     },
     location: {// states in which specific genre this comment will be in and will say it is a comment

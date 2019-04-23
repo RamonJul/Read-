@@ -22,11 +22,16 @@ module.exports={
                 else{
                   return cb(null,user)
                 }
-                  
-              
         }).catch(err=>{
 
           return cb(err)
         })
+    },
+
+    UserName:(req,res)=>{
+      User.findOne({where:{id:req.parmas.id}})
+      .then((user)=>{
+          res.json(user)
+      })
     }
   }

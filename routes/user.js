@@ -1,13 +1,15 @@
 const router = require(`express`).Router();
 const {isAuthenticated,AuthenticatedBoolean}=require(`./utils/isAuthenticated`)
-
+const UserContr=require(`./../controller/author`)
 
 module.exports=(passport)=>{
     //login or create a user
     router.get(`/auth/login/github`, 
-    passport.authenticate(`github`,{scope:[`user:email`]}))
-    router.get(`/auth/login/callback`,
 
+    passport.authenticate(`github`,{scope:[`user:email`]}))
+
+
+    router.get(`/auth/login/callback`,
         passport.authenticate(`github`,{
             successRedirect:`/`,
             failureRedirect:`/auth/login/github`
@@ -15,7 +17,6 @@ module.exports=(passport)=>{
                     res.redirect(`/`)
             }
                 
-
     )
     
 
@@ -49,6 +50,13 @@ module.exports=(passport)=>{
 
             res.json(AuthenticatedBoolean(req))
         })    
+
+
+// grab any users information
+    router.route(`/user`)
+        .get(UserContr.Username)
+
+
     return router
 
 };
