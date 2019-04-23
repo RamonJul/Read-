@@ -93,7 +93,7 @@ module.exports={
                 }
               }).then((result)=>{
                 const post={
-                  post:result[i],
+                  post:result,
                   comments:filteredArray
                 }
                 res.json(post);

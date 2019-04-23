@@ -7,6 +7,10 @@ export default class Home extends React.Component {
     state = {
         recentPosts: []
     }
+    
+    componentDidMount() {
+        this.loadRecent();
+    }
 
     loadRecent = () => {
         API.getRecent()
@@ -17,7 +21,8 @@ export default class Home extends React.Component {
         return (
             <div>
                 <Container>
-                    {this.state.recentPosts.map(p => <Post postId={p.postId} postTitle={p.title} />)}
+                    {this.state.recentPosts.map((p,i) => 
+                        <Post postId={p.id} key={i} postTitle={p.title} Category={p.location} Author={p.author}/>)}
                 </Container>
             </div>
         )

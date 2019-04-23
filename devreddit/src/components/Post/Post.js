@@ -9,14 +9,13 @@ export default function Post(props) {
             </div>
             <div className="d-flex flex-column w-75">
                 <div className="card-block px-2">
-                    <a href={`/post/${props.postId}`} className="card-title h4">{props.postTitle || "Title"}</a>
+                    <a href={`/category/${props.Category}/id/${props.postId}`} className="card-title h4">{props.postTitle || "Title"}</a>
                     <p className="font-italic">{props.Category || "Category"}</p>
                     <p className="card-text">{props.postDescription || "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tincidunt consequat metus, nec finibus augue imperdiet eget. In hac habitasse platea dictumst. Ut vestibulum tempor justo, quis eleifend tortor congue at. Maecenas vitae interdum leo. Duis vel velit at nulla volutpat fringilla at eu nunc. Vivamus suscipit finibus neque, vel."}</p>
                 </div>
                 <div className="w-100"></div>
                 <div className="d-flex flex-row mt-5 justify-items-between">
-                    <button className="btn btn-link">Reply</button>
-                    <a href={`/user/${props.UserId}`} className="font-italic justify-self-start">{props.Author || "Author"}</a>
+                    <a href={`/user/${props.UserId}`} className="font-italic m-2 justify-self-start">{props.Author || "Author"}</a>
                 </div>
             </div>
         </div>
