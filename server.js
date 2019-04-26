@@ -6,7 +6,7 @@ const passport=require("passport")
 const session=require("express-session")
 const app = express();
 const cookieParser=require("cookie-parser")
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 const path=require("path")
 const sessionConfig=require("./config/session")
 require("./config/passport")(passport)
@@ -20,7 +20,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 //) Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
+  app.use(express.static("devreddit/build"));
 }
 
 // Routes
@@ -29,7 +29,7 @@ app.use(userroutes);
 
 
 app.get("*", (req, res)=> {
-  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+  res.sendFile(path.join(__dirname, "./devreddit/build/index.html"));
 });
 
 

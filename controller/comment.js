@@ -18,10 +18,10 @@ module.exports={
       console.log(newCategory)
       db.categories.create(newCategory)
       .then(()=>{
-        return res.status(200)
+        return res.sendStatus(200)
       }).catch(err=>{
         console.log(err)
-        return res.status(400)
+        return res.sendStatus(400)
       })
     },
 
@@ -40,7 +40,7 @@ module.exports={
     MakePost:(req,res)=>{
       console.log("Posts Posts or Comments")
       const newPost={
-        post:req.body.text,
+        post:req.body.post,
         title:req.body.title,
         author:req.body.author,
         location:req.params.category
@@ -53,10 +53,10 @@ module.exports={
     
      comment_db.create(newPost)
      .then(()=>{
-      return res.status(200)
+      return res.sendStatus(200)
     }).catch(err=>{
       console.log(err)
-      return res.status(400)
+      return res.sendStatus(400)
     })
     },
 
@@ -93,7 +93,7 @@ module.exports={
                 }
               }).then((result)=>{
                 const post={
-                  post:result[i],
+                  post:result,
                   comments:filteredArray
                 }
                 res.json(post);
