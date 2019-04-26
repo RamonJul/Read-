@@ -40,7 +40,7 @@ module.exports={
     MakePost:(req,res)=>{
       console.log("Posts Posts or Comments")
       const newPost={
-        post:req.body.text,
+        post:req.body.post,
         title:req.body.title,
         author:req.body.author,
         location:req.params.category

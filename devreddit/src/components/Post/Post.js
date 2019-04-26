@@ -15,7 +15,7 @@ export default function Post(props) {
                 </div>
                 <div className="w-100"></div>
                 <div className="d-flex flex-row mt-5 justify-items-between">
-                    <a href={`/user/${props.UserId}`} className="font-italic m-2 justify-self-start">{props.Author || "Author"}</a>
+                    <div className="font-italic m-2 justify-self-start">{props.Author || "Author"}</div>
                 </div>
             </div>
         </div>

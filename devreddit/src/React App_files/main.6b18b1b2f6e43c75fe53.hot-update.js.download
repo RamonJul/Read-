@@ -1,0 +1,187 @@
+webpackHotUpdate("main",{
+
+/***/ "./src/components/Comment/index.js":
+/*!*****************************************!*\
+  !*** ./src/components/Comment/index.js ***!
+  \*****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Comment; });
+/* harmony import */ var C_Users_Josh_BootCamp_Work_Read_devreddit_node_modules_babel_preset_react_app_node_modules_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/defineProperty */ "./node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var C_Users_Josh_BootCamp_Work_Read_devreddit_node_modules_babel_preset_react_app_node_modules_babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/classCallCheck */ "./node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var C_Users_Josh_BootCamp_Work_Read_devreddit_node_modules_babel_preset_react_app_node_modules_babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/createClass */ "./node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var C_Users_Josh_BootCamp_Work_Read_devreddit_node_modules_babel_preset_react_app_node_modules_babel_runtime_helpers_esm_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn */ "./node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js");
+/* harmony import */ var C_Users_Josh_BootCamp_Work_Read_devreddit_node_modules_babel_preset_react_app_node_modules_babel_runtime_helpers_esm_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/getPrototypeOf */ "./node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js");
+/* harmony import */ var C_Users_Josh_BootCamp_Work_Read_devreddit_node_modules_babel_preset_react_app_node_modules_babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/inherits */ "./node_modules/babel-preset-react-app/node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./style.css */ "./src/components/Comment/style.css");
+/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_style_css__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _Form__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Form */ "./src/components/Form/index.js");
+/* harmony import */ var _utils_API__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../utils/API */ "./src/utils/API.js");
+
+
+
+
+
+
+var _jsxFileName = "C:\\Users\\Josh\\BootCamp Work\\Read-\\devreddit\\src\\components\\Comment\\index.js";
+
+
+
+
+
+var Comment =
+/*#__PURE__*/
+function (_React$Component) {
+  Object(C_Users_Josh_BootCamp_Work_Read_devreddit_node_modules_babel_preset_react_app_node_modules_babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_5__["default"])(Comment, _React$Component);
+
+  function Comment() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    Object(C_Users_Josh_BootCamp_Work_Read_devreddit_node_modules_babel_preset_react_app_node_modules_babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_1__["default"])(this, Comment);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = Object(C_Users_Josh_BootCamp_Work_Read_devreddit_node_modules_babel_preset_react_app_node_modules_babel_runtime_helpers_esm_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__["default"])(this, (_getPrototypeOf2 = Object(C_Users_Josh_BootCamp_Work_Read_devreddit_node_modules_babel_preset_react_app_node_modules_babel_runtime_helpers_esm_getPrototypeOf__WEBPACK_IMPORTED_MODULE_4__["default"])(Comment)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    _this.state = {
+      id: _this.props.id,
+      show: false,
+      comment: "",
+      author: "something something cookies"
+    };
+
+    _this.handleInputChange = function (e) {
+      var _e$target = e.target,
+          name = _e$target.name,
+          value = _e$target.value;
+
+      _this.setState(Object(C_Users_Josh_BootCamp_Work_Read_devreddit_node_modules_babel_preset_react_app_node_modules_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_0__["default"])({}, name, value));
+    };
+
+    _this.handleReply = function () {
+      _this.setState({
+        show: true
+      });
+    };
+
+    _this.handleSubmit = function (e) {
+      e.preventDefault();
+      _utils_API__WEBPACK_IMPORTED_MODULE_9__["default"].makePost(_this.props.match.params.category, {
+        parentId: _this.state.id,
+        post: _this.state.comment,
+        title: "420",
+        author: _this.state.author,
+        postId: _this.props.match.params.id
+      });
+    };
+
+    return _this;
+  }
+
+  Object(C_Users_Josh_BootCamp_Work_Read_devreddit_node_modules_babel_preset_react_app_node_modules_babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_2__["default"])(Comment, [{
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      return react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement("div", {
+        className: "comment p-2 d-flex flex-column",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 38
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement("div", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 39
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement("strong", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 39
+        },
+        __self: this
+      }, this.props.author)), react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement("div", {
+        className: "text-muted p-4",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 40
+        },
+        __self: this
+      }, this.props.post), react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement("div", {
+        className: "w-100",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 41
+        },
+        __self: this
+      }), react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement("div", {
+        className: "text-muted",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 42
+        },
+        __self: this
+      }, this.state.show ? react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement("form", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 43
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(_Form__WEBPACK_IMPORTED_MODULE_8__["TextArea"], {
+        onChange: function onChange() {
+          return _this2.handleInputChange();
+        },
+        placeholder: "Reply...",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 44
+        },
+        __self: this
+      }), react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement(_Form__WEBPACK_IMPORTED_MODULE_8__["FormBtn"], {
+        onClick: function onClick() {
+          return _this2.handleSubmit();
+        },
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 45
+        },
+        __self: this
+      }, "Comment")) : react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement("a", {
+        href: "/#",
+        onClick: function onClick() {
+          return _this2.handleReply();
+        },
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 48
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_6___default.a.createElement("em", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 48
+        },
+        __self: this
+      }, "Reply"))));
+    }
+  }]);
+
+  return Comment;
+}(react__WEBPACK_IMPORTED_MODULE_6___default.a.Component);
+
+
+
+/***/ })
+
+})
+//# sourceMappingURL=main.6b18b1b2f6e43c75fe53.hot-update.js.map
