@@ -102,7 +102,6 @@ module.exports={
     },
     //grab most recent created posts
     FindRecentPosts:(req,res)=>{
-      console.log(req.user)
      comment_db
       .findAll({
           where:{

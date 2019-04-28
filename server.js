@@ -1,17 +1,29 @@
 
 const db =require("./models")
 const express = require("express");
-const commentRoutes=require("./routes/comment")
 const passport=require("passport")
 const session=require("express-session")
-const app = express();
 const cookieParser=require("cookie-parser")
 const PORT = process.env.PORT || 3001;
 const path=require("path")
 const sessionConfig=require("./config/session")
 require("./config/passport")(passport)
-const userroutes=require("./routes/user")(passport)
+const cors =require("cors")
+const routes=require("./routes")
+const app = express();
 // Middleware
+app.use(cors())
+app.use((req,res,next)=>{
+
+  res.header('Access-Control-Allow-Origin',`*`);
+  res.header(`Access-Control-Allow-Methods`,`GET,POST,PUT,DELETE`);
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+})
+app.all('/*', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  next();
+});
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(session(sessionConfig));
@@ -23,10 +35,11 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static("devreddit/build"));
 }
 
-// Routes
-app.use(commentRoutes);
-app.use(userroutes);
 
+
+// Routes
+
+app.use(routes)
 
 app.get("*", (req, res)=> {
   res.sendFile(path.join(__dirname, "./devreddit/build/index.html"));

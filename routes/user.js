@@ -1,20 +1,23 @@
 const router = require(`express`).Router();
 const {isAuthenticated,AuthenticatedBoolean}=require(`./utils/isAuthenticated`)
 const UserContr=require(`./../controller/author`)
+const passport=require("passport")
 
-module.exports=(passport)=>{
+
     //login or create a user
-    router.get(`/auth/login/github`, 
+    router.route(`/auth/login/github`).get(passport.authenticate(`github`,{scope:[`user:email`]}))
 
-    passport.authenticate(`github`,{scope:[`user:email`]}))
+    // router.route(`/auth/login/github`).get((req,res)=>res.json("hello"))
+    
 
 
-    router.get(`/auth/login/callback`,
+    router.route(`/auth/login/callback`).get(
+        
         passport.authenticate(`github`,{
-            successRedirect:`/`,
             failureRedirect:`/auth/login/github`
             }),(req,res)=>{
-                    res.redirect(`/`)
+                console.log("CALLBACK")
+                    res.redirect(`http://localhost:3000/`)
             }
                 
     )
@@ -22,7 +25,8 @@ module.exports=(passport)=>{
 
     //logout user
 
-    router.get(`/auth/logout`,isAuthenticated,(req,res)=>{
+    router.route(`/auth/logout`).get(isAuthenticated,(req,res)=>{
+
         req.logOut();
         req.session.destroy((err)=>{
             console.log(`LOGGING OUT`)
@@ -38,25 +42,23 @@ module.exports=(passport)=>{
 
 
     //grab user information
-    router.get(`/auth/user`,isAuthenticated,(req,res)=>{
+router.get(`/auth/user`,isAuthenticated,(req,res)=>{
 
-            req.json(req.user)
+            res.json(req.user)
     })
 
 
 //checks if user is authenticated
     router.route(`/auth/isAuthenticaed`)
         .get((req,res)=>{
-
             res.json(AuthenticatedBoolean(req))
         })    
 
 
 // grab any users information
     router.route(`/user`)
-        .get(UserContr.Username)
+        .get(UserContr.UserName)
 
 
-    return router
+module.exports= router
 
-};
