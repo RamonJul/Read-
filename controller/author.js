@@ -2,6 +2,7 @@ const User=require("../models").Authors
 
 module.exports={
     Login:(accessToken,refreshToken,profile,cb)=>{
+        console.log("loggin you in!!!!!!1")
         User.findOne({where:{githubId:profile.id}})
         .then((user)=>{
                 if(!user){
@@ -20,6 +21,7 @@ module.exports={
                     })
                 }
                 else{
+                  console.log(user)
                   return cb(null,user)
                 }
         }).catch(err=>{

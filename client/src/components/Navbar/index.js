@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import logo from '../../logo.svg';
+import LoginBtn from './../LoginBtn'
 import Row from '../Row';
 import Col from '../Col';
 import "./style.css";
@@ -57,15 +58,7 @@ function Navbar(props) {
             <Col size="8"></Col>
             <Col size="4">
             <ul className="navbar-nav user-nav">
-              <li className="nav-item">
-              {/* if not logged in or not*/}
-                <Link
-                  to="/login"
-                  className="nav-link"
-                >
-                  Login/Logout  
-                </Link>
-              </li>
+                  <LoginBtn></LoginBtn>
               <li className="nav-item">
               {/* If logged in */}
                 <Link
