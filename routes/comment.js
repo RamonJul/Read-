@@ -18,7 +18,7 @@ router.route("/api/categorylist")// show all of the categories
     .get(commentController.GetCategories)
     .post(commentController.MakeCategory)
 
-router.route("/api/comment/:id")
+router.route("/api/comment/:id")// checks if a user can delte a comment
     .get(commentController.CheckOwnerShip)
     .delete(commentController.DeleteComment)
 

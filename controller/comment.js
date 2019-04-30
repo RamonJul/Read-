@@ -4,14 +4,12 @@ const comment_db=db.Comments;
 module.exports={
   //show all categorie
     GetCategories:(req,res)=>{
-      console.log("Get Categories")
         db.categories
         .findAll({})
         .then(dbCategories=> res.json(dbCategories))
     },
     //add a category
     MakeCategory:(req,res)=>{
-      console.log("Post Categories")
       const newCategory={
         categories:req.body.category
       }
@@ -20,14 +18,12 @@ module.exports={
       .then(()=>{
         return res.sendStatus(200)
       }).catch(err=>{
-        console.log(err)
         return res.sendStatus(400)
       })
     },
 
     //get all posts under a category
     GetPost:(req,res)=>{
-      console.log("Get Posts")
        comment_db
         .findAll({
             where: {
@@ -38,12 +34,12 @@ module.exports={
     },
     //make a post or a comment
     MakePost:(req,res)=>{
-      console.log("Posts Posts or Comments")
       const newPost={
         post:req.body.post,
         title:req.body.title,
         author:req.body.author,
-        location:req.params.category
+        location:req.params.category,
+        image:req.params.image
       }
       if (req.params.id&&req.body.parentId) {//comment specific parameters
         newPost.postId = req.params.id
@@ -55,7 +51,6 @@ module.exports={
      .then(()=>{
       return res.sendStatus(200)
     }).catch(err=>{
-      console.log(err)
       return res.sendStatus(400)
     })
     },
@@ -63,7 +58,6 @@ module.exports={
     //grab all comments under a post
     GetComment:(req,res)=>{
       let filteredArray=[]
-      console.log("Get Comments")
        comment_db.findAll({
             where: {
               postId: req.params.id

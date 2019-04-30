@@ -16,16 +16,9 @@ export default {
 
     allCategories: () => axios.get(`/api/categorylist`),
 
-    Login: ()=> axios.get(`/auth/login/github`).then(()=>console.log("hello again")).catch(error => {
-        console.log(error.response)
-    }),
-
     Logout: ()=>axios.get(`/auth/logout`),
  
     userInfo: ()=>axios.get(`/auth.user`),
 
-    isAuthenticated:()=>axios.get(`/auth/isAuthenticaed`).catch(error => {
-        console.log(error.response)
-    })
-
+    isAuthenticated:()=>axios.get(`/auth/isAuthenticaed`)
 }

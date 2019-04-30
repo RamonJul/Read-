@@ -1,4 +1,6 @@
 module.exports={
+
+    //move to dotenv
     cookie: {
         httpOnly: true,
         sameSite: true,

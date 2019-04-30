@@ -7,16 +7,15 @@ const passport=require("passport")
     //login or create a user
     router.route(`/auth/login/github`).get(passport.authenticate(`github`,{scope:[`user:email`]}))
 
-    // router.route(`/auth/login/github`).get((req,res)=>res.json("hello"))
     
 
-
+    //callback function for github oath
     router.route(`/auth/login/callback`).get(
         
         passport.authenticate(`github`,{
             failureRedirect:`/auth/login/github`
             }),(req,res)=>{
-                console.log("CALLBACK")
+                    // redirect back to home page
                     res.redirect(`http://localhost:3000/`)
             }
                 
@@ -29,7 +28,6 @@ const passport=require("passport")
 
         req.logOut();
         req.session.destroy((err)=>{
-            console.log(`LOGGING OUT`)
             if(!err){
                 res.status(200)
                 .clearCookie(`sessionId`,{path:`/`})
@@ -42,7 +40,7 @@ const passport=require("passport")
 
 
     //grab user information
-router.get(`/auth/user`,isAuthenticated,(req,res)=>{
+    router.get(`/auth/user`,isAuthenticated,(req,res)=>{
 
             res.json(req.user)
     })

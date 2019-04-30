@@ -17,6 +17,9 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: false
     },
+    image:{
+      type: DataTypes.STRING
+    },
     location: {// states in which specific genre this comment will be in and will say it is a comment
       type: DataTypes.STRING,
       allowNull: false,

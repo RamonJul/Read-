@@ -1,8 +1,8 @@
 const User=require("../models").Authors
 
 module.exports={
+    //checks if the user exits or not then logs them in
     Login:(accessToken,refreshToken,profile,cb)=>{
-        console.log("loggin you in!!!!!!1")
         User.findOne({where:{githubId:profile.id}})
         .then((user)=>{
                 if(!user){
@@ -17,11 +17,11 @@ module.exports={
                    User.create(newUser).then((CreatedUser)=> {
                     return cb(null,CreatedUser)
                     }).catch(err=>{
+                      //add the user obj in req to store user information
                       return cb(err)
                     })
                 }
                 else{
-                  console.log(user)
                   return cb(null,user)
                 }
         }).catch(err=>{
@@ -30,7 +30,9 @@ module.exports={
         })
     },
 
-    UserName:(req,res)=>{
+
+    //grab any user information
+    UserName:(req,res)=>{ 
       User.findOne({where:{id:req.parmas.id}})
       .then((user)=>{
           res.json(user)
