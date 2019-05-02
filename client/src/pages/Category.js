@@ -6,6 +6,7 @@ import { Input, FormBtn, TextArea } from "../components/Form";
 import Post from '../components/Post/Post';
 import Container from '../components/Container';
 import { Modal, Button } from 'react-bootstrap';
+import logo from '../logo.svg'
 
 export default class Category extends React.Component {
     state = {
@@ -18,7 +19,7 @@ export default class Category extends React.Component {
             post: "",
             location: this.props.match.params.category,
             author: "GetFromCookies?",
-            // image: ""
+            image: logo
         },
     }
 
@@ -52,7 +53,7 @@ export default class Category extends React.Component {
                 post: this.state.newPost.post,
                 location: this.state.newPost.location,
                 author: this.state.newPost.author,
-                // image: this.state.newPost.image
+                image: this.state.newPost.image
             }
         })
     }
@@ -65,7 +66,7 @@ export default class Category extends React.Component {
                 post: value,
                 location: this.state.newPost.location,
                 author: this.state.newPost.author,
-                // image: this.state.newPost.image
+                image: this.state.newPost.image
             }
         })
     }
@@ -93,33 +94,32 @@ export default class Category extends React.Component {
         this.handleClose();
     }
 
-    // myWidget = cloudinary.createUploadWidget({
-    //     cloudName: `daawmv4sy`,
-    //     uploadPreset: `tzbvcytv`,
-    //     sources: [`local`, `url`],
-    //     defaultSource: `local`
+    OpenWidget=widget=>{
     
-    // }, (error, result) => {
-    //     if (error) {
-    //         console.log(error)
-    //     } else if (!error && result && result.event === "success") {
-    //         console.log('Done! Here is the image info: ', result.info);
-    //         const imgUrl = result.info.url
+        widget.open()
+    }
     
-    //         //then doo all the api call here
-    //     }
+    CloseWidget=widget=>{
     
-    // })
+        widget.close()
+    }
 
-    // OpenWidget=widget=>{
+    checkUploadResult = (error, result) => {
+        if (error) {
+            console.log(error)
+        } else if (!error && result && result.event === "success") {
+            console.log('Done! Here is the image info: ', result.info);
+            let imgUrl = result.info.url
     
-    //     widget.open()
-    // }
-    
-    // CloseWidget=widget=>{
-    
-    //     widget.close()
-    // }
+            this.setState({newPost: {
+                            title: this.state.newPost.title,
+                            post: this.state.newPost.post,
+                            location: this.state.newPost.location,
+                            author: this.state.newPost.author,
+                            image: imgUrl
+            }})
+        }
+    }
     
     render() {
         if(!this.props.match.params.category){
@@ -152,6 +152,15 @@ export default class Category extends React.Component {
             )
         }
         else{
+
+            let widget = window.cloudinary.createUploadWidget({
+                cloudName: `daawmv4sy`,
+                uploadPreset: `tzbvcytv`,
+                sources: [`local`, `url`],
+                defaultSource: `local`
+            
+            }, (error, result) => {this.checkUploadResult(error, result)})
+
             return (
                 <div className="d-flex flex-row">
                     <div className="d-flex flex-column container">
@@ -163,6 +172,7 @@ export default class Category extends React.Component {
                     </div>
                     <div className="d-flex flex-column">
                         <button onClick={() => this.handleShow()} className="btn btn-primary mr-5">Create New Post</button>
+                        <button onClick={this.openWidget(widget)}>Upload Photo</button>
                         <Modal show={this.state.show} onHide={this.handleClose}>
                             <Modal.Header closeButton>
                             <Modal.Title>Create New Post</Modal.Title>
