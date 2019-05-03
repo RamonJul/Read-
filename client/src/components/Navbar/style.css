@@ -9,3 +9,7 @@ nav.navbar.navbar-default {
 #w-100{
   min-width: 100%!important;
 }
+
+.profilepic{
+  max-width: 50px;
+}

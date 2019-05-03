@@ -3,28 +3,40 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './pages/Home';
 import Category from './pages/Category';
 import Post from './pages/Post';
-import Login from './pages/Login';
 import FourOhFour from './pages/404';
 import User from './pages/User';
 import Footer from './components/Footer';
 import Navbar from "./components/Navbar";
 import Wrapper from "./components/Wrapper";
 import './App.css';
+import API from './utils/API';
 
 class App extends Component {
+
+  state={
+    user: "",
+    authenticated: false
+  }
+
+  componentDidMount(){
+    API.userInfo().then(res=>this.setState({
+      user: res.data
+    }))
+    API.isAuthenticated().then(res=>this.setState({ authenticated: res.data}))
+  }
+
   render() {
     return (
       <Router>
         <div>
-          <Navbar />
+          <Navbar user={this.state.user} authenticated={this.state.authenticated} />
           <Wrapper>
             <Switch>
               <Route exact path="/" component={Home} />
               <Route exact path="/category" component={Category} />
               <Route exact path="/category/:category" component={Category} />
               <Route exact path="/category/:category/id/:postId" component={Post} />
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/user/:userId" component={User}/>
+              <Route exact path="/user/:userId"  render= {() => <User user={this.state.user}/>} />
               <Route component={FourOhFour}/>
             </Switch>
           </Wrapper>
