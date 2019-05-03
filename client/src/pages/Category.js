@@ -6,6 +6,7 @@ import { Input, FormBtn, TextArea } from "../components/Form";
 import Post from '../components/Post/Post';
 import Container from '../components/Container';
 import { Modal, Button } from 'react-bootstrap';
+import LogIn from '../components/LoginBtn'
 import logo from '../logo.svg'
 
 export default class Category extends React.Component {
@@ -36,11 +37,6 @@ export default class Category extends React.Component {
             image: this.state.newPost.image
         }}))
     }
-    componentDidUpdate=()=>{
-        this.checkIfLoggedIn()
-
-    }
-
     loadCats = () => {
         API.allCategories()
             .then(res => this.setState({categories: res.data, newCat:""}));
@@ -48,8 +44,7 @@ export default class Category extends React.Component {
 
     loadPosts = () => {
         API.getCategory(this.props.match.params.category)
-            .then(res =>{ 
-                console.log(res.data)    
+            .then(res =>{    
                 this.setState({posts: res.data})
             })
     }
@@ -122,7 +117,6 @@ export default class Category extends React.Component {
 
     checkUploadResult = (error, result) => {
         if (error) {
-            console.log(error)
         } else if (!error && result && result.event === "success") {
             console.log('Done! Here is the image info: ', result.info);
             let imgUrl = result.info.url
@@ -148,6 +142,14 @@ export default class Category extends React.Component {
       
     }
     render() {
+        let widget = window.cloudinary.createUploadWidget({
+            cloudName: `daawmv4sy`,
+            uploadPreset: `tzbvcytv`,
+            sources: [`local`, `url`],
+            defaultSource: `local`
+        
+        }, (error, result) => {this.checkUploadResult(error, result)})
+
         if(!this.props.match.params.category){
 
             return (
@@ -180,14 +182,6 @@ export default class Category extends React.Component {
         }
         else{
 
-            let widget = window.cloudinary.createUploadWidget({
-                cloudName: `daawmv4sy`,
-                uploadPreset: `tzbvcytv`,
-                sources: [`local`, `url`],
-                defaultSource: `local`
-            
-            }, (error, result) => {this.checkUploadResult(error, result)})
-
             return (
                 <div className="d-flex flex-row">
                     <div className="d-flex flex-column container">
@@ -198,7 +192,7 @@ export default class Category extends React.Component {
                         </Container>    
                     </div>
                     <div className="d-flex flex-column">
-                     {this.state.loggedIn?(<button onClick={() => this.handleShow()} className="btn btn-primary mr-5" >Create New Post</button>):(<p>Wanna Join LogIn</p>)}
+                     {this.state.loggedIn?(<button onClick={() => this.handleShow()} className="btn btn-primary mr-5" >Create New Post</button>):(<p onClick={this.checkIfLoggedIn}>Wanna  Join <LogIn/></p>)}
 
                         <Modal show={this.state.show} onHide={this.handleClose}>
                             <Modal.Header closeButton>

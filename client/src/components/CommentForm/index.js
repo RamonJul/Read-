@@ -17,11 +17,6 @@ export default class commentForm extends React.Component{
         }))
     }
 
-    componentDidUpdate=()=>{
-        this.checkIfLoggedIn()
-
-    }
-
     handleInputChange = e => {
         const { name, value } = e.target
         this.setState({
@@ -53,7 +48,11 @@ export default class commentForm extends React.Component{
             title: "420",
             author: this.state.author,
             postId: this.props.postId
-        }).then( this.setState({show: false }))
+        }).then(()=>
+        {
+        this.setState({show: false })
+        this.props.commenting()
+        })
         .catch(err => console.log(err))
 
     }

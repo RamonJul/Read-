@@ -23,7 +23,6 @@ export default class Post extends React.Component {
         if(this.state.id!==this.props.postId){
         API.userData(this.props.Author).then((res)=>{
             let name=res.data.name
-            console.log(name)
             this.setState({
                 id:this.props.postId,
                 name:name
@@ -50,7 +49,7 @@ export default class Post extends React.Component {
                     <div className="font-italic m-2 justify-self-start">{this.state.name || "Author"}</div>
                 </div>
                 {}
-            <CommentForm postId={this.props.postId} id={this.props.postId} category={this.props.category}/>
+            <CommentForm commenting ={this.props.commenting}postId={this.props.postId} id={this.props.postId} category={this.props.category}/>
             </div>
         </div>
     )

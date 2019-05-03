@@ -26,7 +26,6 @@ const passport=require("passport")
 
         req.logOut();
         req.session.destroy((err)=>{
-            console.log(`LOGGING OUT`)
             if(!err){
                 res.status(200)
                 .clearCookie(`sessionId`,{path:`/`})

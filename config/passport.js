@@ -3,13 +3,7 @@ const user=require("../controller/author");
 const keys=require("./keys.js")
 module.exports=((passport)=>{
     passport.use(  
-    new GithubStrategy(
-    {
-       clientID:keys.id||"ccaa642cfb7447a32ab0",
-       clientSecret:keys.secret||"9062cd20fb26ff484fba8ae84a10bd6e2c20b70d",
-       callbackUrl: "http://localhost:3001/auth/login/callback"  
-    },
-
+    new GithubStrategy(keys.Github,
     (accessToken,refreshToken,profile,cb)=>{
         process.nextTick(()=>{            
         user.Login(accessToken,refreshToken,profile,cb)
