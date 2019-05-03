@@ -31,7 +31,7 @@ module.exports={
     },
 
     UserName:(req,res)=>{
-      User.findOne({where:{id:req.parmas.id}})
+      User.findOne({where:{id:req.params.id}})
       .then((user)=>{
           res.json(user)
       })

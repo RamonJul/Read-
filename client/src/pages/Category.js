@@ -6,6 +6,7 @@ import { Input, FormBtn, TextArea } from "../components/Form";
 import Post from '../components/Post/Post';
 import Container from '../components/Container';
 import { Modal, Button } from 'react-bootstrap';
+import logo from '../logo.svg'
 
 export default class Category extends React.Component {
     state = {
@@ -18,13 +19,20 @@ export default class Category extends React.Component {
             post: "",
             location: this.props.match.params.category,
             author: "GetFromCookies?",
-            // image: ""
+            image: logo
         },
     }
 
     componentDidMount() {
         this.loadPosts();
         this.loadCats(); 
+        API.userInfo().then(res => this.setState({newPost: {
+            title: this.state.newPost.title,
+            post: this.state.newPost.post,
+            location: this.state.newPost.location,
+            author: res.data.id,
+            image: this.state.newPost.image
+        }}))
     }
 
     loadCats = () => {
@@ -34,7 +42,10 @@ export default class Category extends React.Component {
 
     loadPosts = () => {
         API.getCategory(this.props.match.params.category)
-            .then(res => this.setState({posts: res.data}))
+            .then(res =>{ 
+                console.log(res.data)    
+                this.setState({posts: res.data})
+            })
     }
 
     handleInput = e => {
@@ -52,7 +63,7 @@ export default class Category extends React.Component {
                 post: this.state.newPost.post,
                 location: this.state.newPost.location,
                 author: this.state.newPost.author,
-                // image: this.state.newPost.image
+                image: this.state.newPost.image
             }
         })
     }
@@ -65,7 +76,7 @@ export default class Category extends React.Component {
                 post: value,
                 location: this.state.newPost.location,
                 author: this.state.newPost.author,
-                // image: this.state.newPost.image
+                image: this.state.newPost.image
             }
         })
     }
@@ -93,33 +104,32 @@ export default class Category extends React.Component {
         this.handleClose();
     }
 
-    // myWidget = cloudinary.createUploadWidget({
-    //     cloudName: `daawmv4sy`,
-    //     uploadPreset: `tzbvcytv`,
-    //     sources: [`local`, `url`],
-    //     defaultSource: `local`
+    OpenWidget=(widget)=>{
+        // e.preventDefault();
+        widget.open()
+    }
     
-    // }, (error, result) => {
-    //     if (error) {
-    //         console.log(error)
-    //     } else if (!error && result && result.event === "success") {
-    //         console.log('Done! Here is the image info: ', result.info);
-    //         const imgUrl = result.info.url
+    CloseWidget=widget=>{
     
-    //         //then doo all the api call here
-    //     }
-    
-    // })
+        widget.close()
+    }
 
-    // OpenWidget=widget=>{
+    checkUploadResult = (error, result) => {
+        if (error) {
+            console.log(error)
+        } else if (!error && result && result.event === "success") {
+            console.log('Done! Here is the image info: ', result.info);
+            let imgUrl = result.info.url
     
-    //     widget.open()
-    // }
-    
-    // CloseWidget=widget=>{
-    
-    //     widget.close()
-    // }
+            this.setState({newPost: {
+                            title: this.state.newPost.title,
+                            post: this.state.newPost.post,
+                            location: this.state.newPost.location,
+                            author: this.state.newPost.author,
+                            image: result.info.url
+            }})
+        }
+    }
     
     render() {
         if(!this.props.match.params.category){
@@ -152,17 +162,27 @@ export default class Category extends React.Component {
             )
         }
         else{
+
+            let widget = window.cloudinary.createUploadWidget({
+                cloudName: `daawmv4sy`,
+                uploadPreset: `tzbvcytv`,
+                sources: [`local`, `url`],
+                defaultSource: `local`
+            
+            }, (error, result) => {this.checkUploadResult(error, result)})
+
             return (
                 <div className="d-flex flex-row">
                     <div className="d-flex flex-column container">
                         <header className="h1 text-center "><ins>{this.props.match.params.category}</ins></header>
                         <Container>
                             {this.state.posts.map((p,i) => 
-                            <Post postId={p.id} key={i} postTitle={p.title} postDescription={p.post} reply={true} Category={p.location} Author={p.author}/>)}
+                            <Post postId={p.id} key={i} postTitle={p.title} postDescription={p.post} reply={true} postImage={p.image} Category={p.location} Author={p.author}/>)}
                         </Container>    
                     </div>
                     <div className="d-flex flex-column">
                         <button onClick={() => this.handleShow()} className="btn btn-primary mr-5">Create New Post</button>
+                        <button onClick={() => this.OpenWidget(widget)}>Upload Photo</button>
                         <Modal show={this.state.show} onHide={this.handleClose}>
                             <Modal.Header closeButton>
                             <Modal.Title>Create New Post</Modal.Title>
@@ -180,7 +200,7 @@ export default class Category extends React.Component {
                                     name="post"
                                     placeholder="Your Text Here"
                                 />
-                                
+                                <button type="button" onClick={() => this.OpenWidget(widget)}>Upload Photo</button>
                             </form></Modal.Body>
                             <Modal.Footer>
                             <Button variant="secondary" onClick={() => this.handleClose()}>
