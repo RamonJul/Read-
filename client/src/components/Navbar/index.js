@@ -5,6 +5,7 @@ import LoginBtn from './../LoginBtn'
 import Row from '../Row';
 import Col from '../Col';
 import "./style.css";
+import API from '../../utils/API'
 
 // Depending on the current path, this component sets the "active" class on the appropriate navigation link item
 function Navbar(props) {
@@ -52,7 +53,7 @@ function Navbar(props) {
           <Col size="md-6">
           <Row>
             <Col size="10"></Col>
-            <Col size="2"><img src="http://placehold.jp/50x50.png"/></Col>
+            <Col size="2"><img alt="profile picture" className="profilepic" src={props.user.profilepic || "https://previews.123rf.com/images/kritchanut/kritchanut1406/kritchanut140600093/29213195-male-silhouette-avatar-profile-picture.jpg"}/></Col>
           </Row>
           <Row>
             <Col size="8"></Col>
@@ -60,13 +61,16 @@ function Navbar(props) {
             <ul className="navbar-nav user-nav">
                   <LoginBtn></LoginBtn>
               <li className="nav-item">
-              {/* If logged in */}
-                <Link
+              {props.authenticated ?
+                (<Link
                   to={`/user/${props.userId}`}
                   className="nav-link"
                 >
                 Profile
-                </Link>
+                </Link>) : (
+                  ""
+                )
+              }
               </li>
             </ul>
             </Col>
