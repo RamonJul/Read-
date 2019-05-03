@@ -1,6 +1,5 @@
 import React from "react";
 import API from "./../../utils/API"
-import axios from 'axios';
 class Loginbutton extends React.Component{
 
 state={

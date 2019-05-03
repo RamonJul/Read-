@@ -6,6 +6,7 @@ import { Input, FormBtn, TextArea } from "../components/Form";
 import Post from '../components/Post/Post';
 import Container from '../components/Container';
 import { Modal, Button } from 'react-bootstrap';
+import LogIn from '../components/LoginBtn'
 import logo from '../logo.svg'
 
 export default class Category extends React.Component {
@@ -14,6 +15,7 @@ export default class Category extends React.Component {
         posts: [],
         newCat: "",
         show: false,
+        loggedIn:false,
         newPost: {
             title: "",
             post: "",
@@ -26,6 +28,7 @@ export default class Category extends React.Component {
     componentDidMount() {
         this.loadPosts();
         this.loadCats(); 
+        this.checkIfLoggedIn()
         API.userInfo().then(res => this.setState({newPost: {
             title: this.state.newPost.title,
             post: this.state.newPost.post,
@@ -34,7 +37,6 @@ export default class Category extends React.Component {
             image: this.state.newPost.image
         }}))
     }
-
     loadCats = () => {
         API.allCategories()
             .then(res => this.setState({categories: res.data, newCat:""}));
@@ -42,8 +44,7 @@ export default class Category extends React.Component {
 
     loadPosts = () => {
         API.getCategory(this.props.match.params.category)
-            .then(res =>{ 
-                console.log(res.data)    
+            .then(res =>{    
                 this.setState({posts: res.data})
             })
     }
@@ -116,7 +117,6 @@ export default class Category extends React.Component {
 
     checkUploadResult = (error, result) => {
         if (error) {
-            console.log(error)
         } else if (!error && result && result.event === "success") {
             console.log('Done! Here is the image info: ', result.info);
             let imgUrl = result.info.url
@@ -126,12 +126,30 @@ export default class Category extends React.Component {
                             post: this.state.newPost.post,
                             location: this.state.newPost.location,
                             author: this.state.newPost.author,
-                            image: result.info.url
+                            image: imgUrl
             }})
         }
     }
+    checkIfLoggedIn=()=>{
+        
+        API.isAuthenticated()
+        .then((resp)=>{
+           this.setState({
+               loggedIn:resp.data
+           })
     
+        })
+      
+    }
     render() {
+        let widget = window.cloudinary.createUploadWidget({
+            cloudName: `daawmv4sy`,
+            uploadPreset: `tzbvcytv`,
+            sources: [`local`, `url`],
+            defaultSource: `local`
+        
+        }, (error, result) => {this.checkUploadResult(error, result)})
+
         if(!this.props.match.params.category){
 
             return (
@@ -143,6 +161,7 @@ export default class Category extends React.Component {
                         }
                     </div>
                     <div className="new-cat mt-3">
+                    {this.state.loggedIn?(
                         <form>
                             <Input
                                 value={this.state.newCat}
@@ -156,20 +175,12 @@ export default class Category extends React.Component {
                             >
                                 Create
                             </FormBtn>
-                        </form>
+                        </form>):(<p>Login to Join</p>)}
                     </div>
                 </div>
             )
         }
         else{
-
-            let widget = window.cloudinary.createUploadWidget({
-                cloudName: `daawmv4sy`,
-                uploadPreset: `tzbvcytv`,
-                sources: [`local`, `url`],
-                defaultSource: `local`
-            
-            }, (error, result) => {this.checkUploadResult(error, result)})
 
             return (
                 <div className="d-flex flex-row">
@@ -181,11 +192,11 @@ export default class Category extends React.Component {
                         </Container>    
                     </div>
                     <div className="d-flex flex-column">
-                        <button onClick={() => this.handleShow()} className="btn btn-primary mr-5">Create New Post</button>
-                        <button onClick={() => this.OpenWidget(widget)}>Upload Photo</button>
+                     {this.state.loggedIn?(<button onClick={() => this.handleShow()} className="btn btn-primary mr-5" >Create New Post</button>):(<p onClick={this.checkIfLoggedIn}>Wanna  Join <LogIn/></p>)}
+
                         <Modal show={this.state.show} onHide={this.handleClose}>
                             <Modal.Header closeButton>
-                            <Modal.Title>Create New Post</Modal.Title>
+                            <Modal.Title>Create New Post</Modal.Title>  
                             </Modal.Header>
                             <Modal.Body><form>
                                 <Input

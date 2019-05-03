@@ -1,7 +1,10 @@
 require("dotenv").config();
-console.log(process.env.GithubId)
+
 module.exports= 
 {
-    id: process.env.GithubId,
-    secret: process.env.GithubSecret
+   Github:{
+    clientID: process.env.GithubId,
+    clientSecret: process.env.GithubSecret,
+    callbackUrl: process.env.callbackUrl||"http://localhost:3001/auth/login/callback"  
+   } 
 }

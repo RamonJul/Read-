@@ -4,30 +4,25 @@ const comment_db=db.Comments;
 module.exports={
   //show all categorie
     GetCategories:(req,res)=>{
-      console.log("Get Categories")
         db.categories
         .findAll({})
         .then(dbCategories=> res.json(dbCategories))
     },
     //add a category
     MakeCategory:(req,res)=>{
-      console.log("Post Categories")
       const newCategory={
         categories:req.body.category
       }
-      console.log(newCategory)
       db.categories.create(newCategory)
       .then(()=>{
         return res.sendStatus(200)
       }).catch(err=>{
-        console.log(err)
         return res.sendStatus(400)
       })
     },
 
     //get all posts under a category
     GetPost:(req,res)=>{
-      console.log("Get Posts")
        comment_db
         .findAll({
             where: {
@@ -38,7 +33,6 @@ module.exports={
     },
     //make a post or a comment
     MakePost:(req,res)=>{
-      console.log("Posts Posts or Comments")
       const newPost={
         post:req.body.post,
         title:req.body.title,
@@ -56,7 +50,6 @@ module.exports={
      .then(()=>{
       return res.sendStatus(200)
     }).catch(err=>{
-      console.log(err)
       return res.sendStatus(400)
     })
     },
@@ -64,7 +57,6 @@ module.exports={
     //grab all comments under a post
     GetComment:(req,res)=>{
       let filteredArray=[]
-      console.log("Get Comments")
        comment_db.findAll({
             where: {
               postId: req.params.id
