@@ -22,10 +22,12 @@ export default {
 
     Logout: ()=>axios.get(`/auth/logout`),
  
-    userInfo: ()=>axios.get(`/auth.user`),
+    userInfo: ()=>axios.get(`/auth/user`),
 
     isAuthenticated:()=>axios.get(`/auth/isAuthenticaed`).catch(error => {
         console.log(error.response)
-    })
+    }),
+
+    userData: userId=>axios.get(`/user/${userId}`)
 
 }

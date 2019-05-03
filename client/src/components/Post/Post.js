@@ -1,5 +1,6 @@
 import React from 'react';
 import logo from '../../logo.svg';
+import API from '../../utils/API'
 
 export default function Post(props) {
     return (

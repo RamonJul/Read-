@@ -43,7 +43,8 @@ module.exports={
         post:req.body.post,
         title:req.body.title,
         author:req.body.author,
-        location:req.params.category
+        location:req.params.category,
+        image: req.body.image
       }
       if (req.params.id&&req.body.parentId) {//comment specific parameters
         newPost.postId = req.params.id

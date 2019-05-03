@@ -26,6 +26,13 @@ export default class Category extends React.Component {
     componentDidMount() {
         this.loadPosts();
         this.loadCats(); 
+        API.userInfo().then(res => this.setState({newPost: {
+            title: this.state.newPost.title,
+            post: this.state.newPost.post,
+            location: this.state.newPost.location,
+            author: res.data.id,
+            image: this.state.newPost.image
+        }}))
     }
 
     loadCats = () => {
@@ -35,7 +42,10 @@ export default class Category extends React.Component {
 
     loadPosts = () => {
         API.getCategory(this.props.match.params.category)
-            .then(res => this.setState({posts: res.data}))
+            .then(res =>{ 
+                console.log(res.data)    
+                this.setState({posts: res.data})
+            })
     }
 
     handleInput = e => {
@@ -94,8 +104,8 @@ export default class Category extends React.Component {
         this.handleClose();
     }
 
-    OpenWidget=widget=>{
-    
+    OpenWidget=(widget)=>{
+        // e.preventDefault();
         widget.open()
     }
     
@@ -116,7 +126,7 @@ export default class Category extends React.Component {
                             post: this.state.newPost.post,
                             location: this.state.newPost.location,
                             author: this.state.newPost.author,
-                            image: imgUrl
+                            image: result.info.url
             }})
         }
     }
@@ -167,12 +177,12 @@ export default class Category extends React.Component {
                         <header className="h1 text-center "><ins>{this.props.match.params.category}</ins></header>
                         <Container>
                             {this.state.posts.map((p,i) => 
-                            <Post postId={p.id} key={i} postTitle={p.title} postDescription={p.post} reply={true} Category={p.location} Author={p.author}/>)}
+                            <Post postId={p.id} key={i} postTitle={p.title} postDescription={p.post} reply={true} postImage={p.image} Category={p.location} Author={p.author}/>)}
                         </Container>    
                     </div>
                     <div className="d-flex flex-column">
                         <button onClick={() => this.handleShow()} className="btn btn-primary mr-5">Create New Post</button>
-                        <button onClick={this.openWidget(widget)}>Upload Photo</button>
+                        <button onClick={() => this.OpenWidget(widget)}>Upload Photo</button>
                         <Modal show={this.state.show} onHide={this.handleClose}>
                             <Modal.Header closeButton>
                             <Modal.Title>Create New Post</Modal.Title>
@@ -190,7 +200,7 @@ export default class Category extends React.Component {
                                     name="post"
                                     placeholder="Your Text Here"
                                 />
-                                
+                                <button type="button" onClick={() => this.OpenWidget(widget)}>Upload Photo</button>
                             </form></Modal.Body>
                             <Modal.Footer>
                             <Button variant="secondary" onClick={() => this.handleClose()}>

@@ -26,8 +26,11 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       defaultValue:0
     },
-    parentId: DataTypes.INTEGER
+    parentId: DataTypes.INTEGER,
     //parent id of where this comment will be
+    image: {
+      type: DataTypes.TEXT,
+    },
   });
   return Comments;
 };

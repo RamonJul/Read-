@@ -56,7 +56,7 @@ router.get(`/auth/user`,isAuthenticated,(req,res)=>{
 
 
 // grab any users information
-    router.route(`/user`)
+    router.route(`/user/:id`)
         .get(UserContr.UserName)
 
 
