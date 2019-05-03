@@ -7,8 +7,6 @@ const passport=require("passport")
     //login or create a user
     router.route(`/auth/login/github`).get(passport.authenticate(`github`,{scope:[`user:email`]}))
 
-    // router.route(`/auth/login/github`).get((req,res)=>res.json("hello"))
-    
 
 
     router.route(`/auth/login/callback`).get(
@@ -16,7 +14,6 @@ const passport=require("passport")
         passport.authenticate(`github`,{
             failureRedirect:`/auth/login/github`
             }),(req,res)=>{
-                console.log("CALLBACK")
                     res.redirect(`http://localhost:3000/`)
             }
                 

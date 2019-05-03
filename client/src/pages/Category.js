@@ -14,6 +14,7 @@ export default class Category extends React.Component {
         posts: [],
         newCat: "",
         show: false,
+        loggedIn:false,
         newPost: {
             title: "",
             post: "",
@@ -26,6 +27,7 @@ export default class Category extends React.Component {
     componentDidMount() {
         this.loadPosts();
         this.loadCats(); 
+        this.checkIfLoggedIn()
         API.userInfo().then(res => this.setState({newPost: {
             title: this.state.newPost.title,
             post: this.state.newPost.post,
@@ -33,6 +35,10 @@ export default class Category extends React.Component {
             author: res.data.id,
             image: this.state.newPost.image
         }}))
+    }
+    componentDidUpdate=()=>{
+        this.checkIfLoggedIn()
+
     }
 
     loadCats = () => {
@@ -126,11 +132,21 @@ export default class Category extends React.Component {
                             post: this.state.newPost.post,
                             location: this.state.newPost.location,
                             author: this.state.newPost.author,
-                            image: result.info.url
+                            image: imgUrl
             }})
         }
     }
+    checkIfLoggedIn=()=>{
+        
+        API.isAuthenticated()
+        .then((resp)=>{
+           this.setState({
+               loggedIn:resp.data
+           })
     
+        })
+      
+    }
     render() {
         if(!this.props.match.params.category){
 
@@ -143,6 +159,7 @@ export default class Category extends React.Component {
                         }
                     </div>
                     <div className="new-cat mt-3">
+                    {this.state.loggedIn?(
                         <form>
                             <Input
                                 value={this.state.newCat}
@@ -156,7 +173,7 @@ export default class Category extends React.Component {
                             >
                                 Create
                             </FormBtn>
-                        </form>
+                        </form>):(<p>Login to Join</p>)}
                     </div>
                 </div>
             )
@@ -181,11 +198,11 @@ export default class Category extends React.Component {
                         </Container>    
                     </div>
                     <div className="d-flex flex-column">
-                        <button onClick={() => this.handleShow()} className="btn btn-primary mr-5">Create New Post</button>
-                        <button onClick={() => this.OpenWidget(widget)}>Upload Photo</button>
+                     {this.state.loggedIn?(<button onClick={() => this.handleShow()} className="btn btn-primary mr-5" >Create New Post</button>):(<p>Wanna Join LogIn</p>)}
+
                         <Modal show={this.state.show} onHide={this.handleClose}>
                             <Modal.Header closeButton>
-                            <Modal.Title>Create New Post</Modal.Title>
+                            <Modal.Title>Create New Post</Modal.Title>  
                             </Modal.Header>
                             <Modal.Body><form>
                                 <Input

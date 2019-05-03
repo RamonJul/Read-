@@ -1,53 +1,33 @@
 import React from 'react';
 import './style.css';
-import { TextArea, FormBtn } from '../Form';
+import CommentForm from '../CommentForm';
 import API from '../../utils/API';
 
 export default class Comment extends React.Component {
-    state = {
-        show: false,
-        comment: "",
-        author:"something something cookies",
+    state={
+        name:""
+
     }
 
-    handleInputChange = e => {
-        const { name, value } = e.target
-        this.setState({
-            [name]: value
+
+    componentDidMount(){
+  
+        API.userData(this.props.author).then((res)=>{
+            let name=res.data.name
+            this.setState({
+                name:name
+            })
         })
-    }
 
-    handleReply = () => {
-        this.setState({ show: true })
-    }
-
-    handleSubmit = e => {
-        e.preventDefault();
-        API.makeComment(this.props.category, this.props.postId, {
-            parentId: this.props.id,
-            post: this.state.comment,
-            title: "420",
-            author: this.state.author,
-            postId: this.props.postId
-        }).then( this.setState({show: false }))
-        .catch(err => console.log(err))
     }
 
     render() {
         return (
             <div className="comment p-2 d-flex flex-column">
-                <div><strong>{this.props.author}</strong></div>
+                <div><strong>{this.state.name}</strong></div>
                 <div className="text-muted p-4">{this.props.post}</div>
                 <div className="w-100"></div>
-                <div className="text-muted">{this.state.show ? (
-                  <form>
-                    <TextArea name="comment" onChange={this.handleInputChange} placeholder="Reply..."/>
-                    <FormBtn onClick={this.handleSubmit}>Comment</FormBtn>
-                  </form>
-                ) : (
-                    <a href="#" onClick={() => this.handleReply()}><em>Reply</em></a>
-                )}
-                </div>
+                <CommentForm postId={this.props.postId} id={this.props.id} category={this.props.category}/>
                 <div className="ml-1">
                     {this.props.children ? (
                         this.props.children.map(c => 
