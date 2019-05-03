@@ -6,12 +6,10 @@ export default class commentForm extends React.Component{
 
     state = {
         show: false,
-        loggedIn:false,
         comment: "",
         author:"something something cookies",
     }
     componentDidMount(){
-        this.checkIfLoggedIn()
         API.userInfo().then(res => this.setState({
             author: res.data.id,
         }))
@@ -27,18 +25,6 @@ export default class commentForm extends React.Component{
     handleReply = () => {
         this.setState({ show: true })
     }
-    checkIfLoggedIn=()=>{
-        
-        API.isAuthenticated()
-        .then((resp)=>{
-           this.setState({
-               loggedIn:resp.data
-           })
-    
-        })
-      
-    }
-
 
     handleSubmit = e => {
         e.preventDefault();
@@ -57,7 +43,7 @@ export default class commentForm extends React.Component{
 
     }
     dispalay=()=>{
-        if(this.state.loggedIn){
+        if(this.props.authenticated){
             return this.state.show ? (                    
                 <form>
                   <TextArea name="comment" onChange={this.handleInputChange} placeholder="Reply..."/>

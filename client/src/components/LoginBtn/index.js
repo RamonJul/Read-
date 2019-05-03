@@ -2,37 +2,18 @@ import React from "react";
 import API from "./../../utils/API"
 class Loginbutton extends React.Component{
 
-state={
 
-Authenticated:false
-
-}
-componentDidMount=()=>{
-    this.isAuthenticated()
-}
-
-
-
-
-isAuthenticated=()=>{
-    API.isAuthenticated()
-    .then((resp)=>{
-        console.log(resp.data)
-        this.setState({Authenticated:resp.data})
-
-    })
-}
-
+LogIn=()=>{this.props.change()}
 Logout=()=>{
-   API.Logout().then(()=>this.isAuthenticated())
+   API.Logout().then(()=>this.props.change())
 }
 
 
 render(){
-    if(!this.state.Authenticated){
+    if(!this.props.authenticated){
         return(
 
-             <a href="http://localhost:3001/auth/login/github"><button className="btn" type="button">Login</button></a>
+             <a href="http://localhost:3001/auth/login/github"><button className="btn" onClick={this.LogIn} type="button">Login</button></a>
 
         )
     }

@@ -15,7 +15,6 @@ export default class Category extends React.Component {
         posts: [],
         newCat: "",
         show: false,
-        loggedIn:false,
         newPost: {
             title: "",
             post: "",
@@ -28,7 +27,6 @@ export default class Category extends React.Component {
     componentDidMount() {
         this.loadPosts();
         this.loadCats(); 
-        this.checkIfLoggedIn()
         API.userInfo().then(res => this.setState({newPost: {
             title: this.state.newPost.title,
             post: this.state.newPost.post,
@@ -130,17 +128,6 @@ export default class Category extends React.Component {
             }})
         }
     }
-    checkIfLoggedIn=()=>{
-        
-        API.isAuthenticated()
-        .then((resp)=>{
-           this.setState({
-               loggedIn:resp.data
-           })
-    
-        })
-      
-    }
     render() {
         let widget = window.cloudinary.createUploadWidget({
             cloudName: `daawmv4sy`,
@@ -161,7 +148,7 @@ export default class Category extends React.Component {
                         }
                     </div>
                     <div className="new-cat mt-3">
-                    {this.state.loggedIn?(
+                    {this.props.authenticated?(
                         <form>
                             <Input
                                 value={this.state.newCat}
@@ -192,7 +179,7 @@ export default class Category extends React.Component {
                         </Container>    
                     </div>
                     <div className="d-flex flex-column">
-                     {this.state.loggedIn?(<button onClick={() => this.handleShow()} className="btn btn-primary mr-5" >Create New Post</button>):(<p onClick={this.checkIfLoggedIn}>Wanna  Join <LogIn/></p>)}
+                     {this.props.authenticated?(<button onClick={() => this.handleShow()} className="btn btn-primary mr-5" >Create New Post</button>):(<p onClick={this.checkIfLoggedIn}>Login to Join</p>)}
 
                         <Modal show={this.state.show} onHide={this.handleClose}>
                             <Modal.Header closeButton>
@@ -218,7 +205,7 @@ export default class Category extends React.Component {
                                 Cancel
                             </Button>
                             <Button variant="primary" onClick={() => this.handleNewPost()}>
-                                Save Changes
+                                Post
                             </Button>
                             </Modal.Footer>
                         </Modal>
