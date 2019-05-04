@@ -14,7 +14,7 @@ const passport=require("passport")
         passport.authenticate(`github`,{
             failureRedirect:`/auth/login/github`
             }),(req,res)=>{
-                    res.redirect(`http://localhost:3000/`)
+                    res.redirect(`/`)
             }
                 
     )
