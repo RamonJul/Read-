@@ -49,7 +49,7 @@ export default class Post extends React.Component {
                 <div className="d-flex flex-row mt-5 justify-items-between">
                     <div className="font-italic m-2 justify-self-start">{this.state.name}</div>
                 </div>
-                {}
+                
             <CommentForm authenticated={this.props.authenticated} commenting ={this.props.commenting}postId={this.props.postId} id={this.props.postId} category={this.props.category}/>
             </div>
         </div>
