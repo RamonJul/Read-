@@ -5,6 +5,6 @@ module.exports=
    Github:{
     clientID: process.env.GithubId,
     clientSecret: process.env.GithubSecret,
-    callbackUrl: process.env.callbackUrl||"/auth/login/callback"  
+    callbackUrl: "https://fathomless-inlet-59388.herokuapp.com/auth/login/callback"  
    } 
 }
