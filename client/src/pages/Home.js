@@ -22,7 +22,7 @@ export default class Home extends React.Component {
             <div>
                 <Container>
                     {this.state.recentPosts.map((p,i) => 
-                        <Post authenticated={this.props.authenticated}postDescription={p.post} postId={p.id} key={i} postTitle={p.title} postImage={p.image} Category={p.location} Author={p.author}/>)}
+                        <Post authenticated={this.props.authenticated} postDescription={p.post} postId={p.id} key={i} postTitle={p.title} postImage={p.image} Category={p.location} Author={p.author}/>)}
                 </Container>
             </div>
         )
