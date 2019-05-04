@@ -174,7 +174,7 @@ export default class Category extends React.Component {
                         <header className="h1 text-center "><ins>{this.props.match.params.category}</ins></header>
                         <Container>
                             {this.state.posts.map((p,i) => 
-                            <Post postId={p.id} key={i} postTitle={p.title} postDescription={p.post} reply={true} postImage={p.image} Category={p.location} Author={p.author}/>)}
+                            <Post authenticated={this.props.authenticated} postId={p.id} key={i} postTitle={p.title} postDescription={p.post} reply={true} postImage={p.image} Category={p.location} Author={p.author}/>)}
                         </Container>    
                     </div>
                     <div className="d-flex flex-column">
