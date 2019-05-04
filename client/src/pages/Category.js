@@ -6,7 +6,6 @@ import { Input, FormBtn, TextArea } from "../components/Form";
 import Post from '../components/Post/Post';
 import Container from '../components/Container';
 import { Modal, Button } from 'react-bootstrap';
-import LogIn from '../components/LoginBtn'
 import logo from '../logo.svg'
 
 export default class Category extends React.Component {
