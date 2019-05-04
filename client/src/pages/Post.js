@@ -45,11 +45,11 @@ export default class Post extends React.Component {
         return(
             <div>
                 <div className="d-flex flex-column">
-                    <Posty commenting={this.Commenting}  postId={this.props.match.params.postId} Category={this.props.match.params.category} postDescription={this.state.post.post} postImage={this.state.post.image} postTitle={this.state.post.title} Author={this.state.post.author} />
+                    <Posty authenticated={this.props.authenticated} commenting={this.Commenting}  postId={this.props.match.params.postId} Category={this.props.match.params.category} postDescription={this.state.post.post} postImage={this.state.post.image} postTitle={this.state.post.title} Author={this.state.post.author} />
                 </div>
                 <div className="w-100 bg-dark" style={{height: 3}}></div>
                 {this.state.comments.map((c,i) => 
-                    <Comment commenting={this.Commenting} id={c.id} post={c.post} children={c.children} key={c.id} author={c.author} category={this.props.match.params.category} postId={this.props.match.params.postId}/>
+                    <Comment authenticated={this.props.authenticated} commenting={this.Commenting} id={c.id} post={c.post} children={c.children} key={c.id} author={c.author} category={this.props.match.params.category} postId={this.props.match.params.postId}/>
                 )}
             </div>
         )

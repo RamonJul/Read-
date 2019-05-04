@@ -25,18 +25,23 @@ class App extends Component {
     API.isAuthenticated().then(res=>this.setState({ authenticated: res.data}))
   }
 
+  changeState=()=>{
+    API.isAuthenticated().then(res=>this.setState({ authenticated: res.data}))
+
+  }
+
   render() {
     return (
       <Router>
         <div>
-          <Navbar user={this.state.user} authenticated={this.state.authenticated} />
+          <Navbar user={this.state.user} authenticated={this.state.authenticated} change={this.changeState}/>
           <Wrapper>
             <Switch>
-              <Route exact path="/" component={Home} />
-              <Route exact path="/category" component={Category} />
-              <Route exact path="/category/:category" component={Category} />
-              <Route exact path="/category/:category/id/:postId" component={Post} />
-              <Route exact path="/user/:userId"  render= {() => <User user={this.state.user}/>} />
+              <Route exact path="/"  render= {(props) => <Home {...props} authenticated={this.state.authenticated}/>}  />
+              <Route exact path="/category" render= {(props) => <Category  {...props}  authenticated={this.state.authenticated}/>}/>
+              <Route exact path="/category/:category" render= {(props) => <Category {...props} authenticated={this.state.authenticated}/>} />
+              <Route exact path="/category/:category/id/:postId"  render= {(props) => <Post {...props} authenticated={this.state.authenticated}/>}  />
+              <Route exact path="/user/:userId"  render= {(props) => <User {...props} user={this.state.user}/>} />
               <Route component={FourOhFour}/>
             </Switch>
           </Wrapper>
