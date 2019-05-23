@@ -21,14 +21,17 @@ Users login using their GitHub account and get the ability to make and delete po
 
 ### Login
 
+![Login]()
+
 ### View Profile
 
-### Deleting a Post or a Comment
-
-### View Posts and Comments
+![View Profilen](https://media.giphy.com/media/2ikyEj7bCHSmyNu8Mq/giphy.gif)
 
 ### Make A Post
 
+![Making Post]()
+
 ### Make A Comment
 
+![Making Comment](https://media.giphy.com/media/SiIdf0igxXLukfyCQJ/giphy.gif)
 
