@@ -19,7 +19,7 @@ function Navbar(props) {
           <Link className="navbar-brand" to="/">
             <img id="logo" src={logo} alt="logo"/>
           </Link>
-         <img alt="profile" className="profilepic" src={props.user.profilepic || "https://previews.123rf.com/images/kritchanut/kritchanut1406/kritchanut140600093/29213195-male-silhouette-avatar-profile-picture.jpg"}/>
+         <img alt="profile" className="profilepic" src={(props.authenticated)? props.user.profilepic : "https://previews.123rf.com/images/kritchanut/kritchanut1406/kritchanut140600093/29213195-male-silhouette-avatar-profile-picture.jpg"}/>
           </Col>
 
 
