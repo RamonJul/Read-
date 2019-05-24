@@ -21,7 +21,7 @@ Users login using their GitHub account and get the ability to make and delete po
 
 ### Login
 
-![Login]()
+![Login](https://media.giphy.com/media/2uI6CAnScg8SU8bSSw/giphy.gif)
 
 ### View Profile
 
@@ -29,7 +29,7 @@ Users login using their GitHub account and get the ability to make and delete po
 
 ### Make A Post
 
-![Making Post]()
+![Making Post](https://media.giphy.com/media/8OVFa2vqEosYAGx6H4/giphy.gif)
 
 ### Make A Comment
 
