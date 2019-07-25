@@ -36,10 +36,10 @@ export default class Post extends React.Component {
     render(){
     return (
         <div className="card m-2 flex-row flex-nowrap post-box">
-            <div className="card-header border-0 justify-content-center image-box">
+            <div className="d-flex card-header border-0 justify-content-center image-box">
                 <img src={this.props.postImage || logo} alt="" className="post-image card-img" />
             </div>
-            <div className="d-flex flex-column w-75">
+            <div className=" card-body d-flex flex-column w-75">
                 <div className="card-block px-2">
                     <a href={`/category/${this.props.Category}/id/${this.props.postId}`} className="card-title h4">{this.props.postTitle}</a>
                     <p className="font-italic">{this.props.Category }</p>

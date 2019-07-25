@@ -2,3 +2,15 @@
     width:212px !important;
     height: 149.891px;
 }
+@media(max-width:730px){
+    .card{
+        flex-wrap: wrap !important;
+    }
+    .card-header,.card-body {
+        width: 100%;
+    }
+    .post-image{
+        width:100% !important;
+        height: auto;
+    }
+}
