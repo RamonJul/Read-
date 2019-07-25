@@ -27,3 +27,6 @@ nav.navbar.navbar-default {
 .navbar{
   flex-direction: column;
 }
+.navbar-nav{
+  flex-direction: row !important;
+}

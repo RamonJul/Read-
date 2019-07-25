@@ -15,19 +15,11 @@ function Navbar(props) {
         <Row id="w-100">
 
         <Col className="profileBar" size="md-12">
-          
+          <div className="d-flex flex-row align-items-center">
           <Link className="navbar-brand" to="/">
             <img id="logo" src={logo} alt="logo"/>
           </Link>
-         <img alt="profile" className="profilepic" src={(props.authenticated)? props.user.profilepic : "https://previews.123rf.com/images/kritchanut/kritchanut1406/kritchanut140600093/29213195-male-silhouette-avatar-profile-picture.jpg"}/>
-          </Col>
-
-
-          </Row>  
-        <Row id="w-100">
-        <Col className="userBar" size="md-12">
-         
-            <ul className="navbar-nav">
+          <ul className="navbar-nav" >
               <li className="nav-item">
                 <Link
                   to="/"
@@ -55,7 +47,10 @@ function Navbar(props) {
                 </Link>
               </li>
             </ul>
-            <ul className="navbar-nav">
+          </div>
+          <div>
+         <img alt="profile" className="profilepic" src={(props.authenticated)? props.user.profilepic : "https://previews.123rf.com/images/kritchanut/kritchanut1406/kritchanut140600093/29213195-male-silhouette-avatar-profile-picture.jpg"}/>
+         <ul className="navbar-nav">
             <li className="nav-item">
             <LoginBtn authenticated={props.authenticated} change={props.change}/>
               </li>
@@ -73,6 +68,16 @@ function Navbar(props) {
             } 
               </li>
             </ul>
+         </div>
+          </Col>
+
+
+          </Row>  
+        <Row id="w-100">
+        <Col className="userBar" size="md-12">
+         
+        
+         
           
             
             
